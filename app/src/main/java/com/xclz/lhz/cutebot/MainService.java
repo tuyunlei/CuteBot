@@ -22,6 +22,8 @@ public class MainService extends Service {
 
 	View mCanvas;
 
+	private int statusBarHeight;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -33,13 +35,13 @@ public class MainService extends Service {
 		mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		mParams.type = mParams.TYPE_SYSTEM_ALERT;
 		mParams.format = PixelFormat.RGBA_8888;
-		mParams.flags = mParams.FLAG_NOT_FOCUSABLE | mParams.FLAG_WATCH_OUTSIDE_TOUCH;
+		mParams.flags = mParams.FLAG_NOT_FOCUSABLE|mParams.FLAG_WATCH_OUTSIDE_TOUCH;
 
-		mParams.gravity = Gravity.LEFT|Gravity.CENTER_VERTICAL;
-		mParams.x = 100;
-		mParams.y = 300;
-		mParams.width = 200;
-		mParams.width = 200;
+		mParams.gravity = Gravity.LEFT|Gravity.TOP;
+		mParams.x = 0;
+		mParams.y = 0;
+		mParams.width = 300;
+		mParams.height = 300;
 
 		LayoutInflater inflater = LayoutInflater.from(getApplication());
 		toucherLayout = (LinearLayout) inflater.inflate(R.layout.main, null);
@@ -50,7 +52,7 @@ public class MainService extends Service {
 		//用于检测状态栏高度.
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
         if(resourceId>0) {
-            //statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+            statusBarHeight = getResources().getDimensionPixelSize(resourceId);
         }
 		mCanvas = toucherLayout.findViewById(R.id.canvas);
 		mCanvas.setOnClickListener(new OnClickListener(){
@@ -66,16 +68,16 @@ public class MainService extends Service {
 						stopSelf();
 					}
 				}
-				
+
 			});
 		mCanvas.setOnTouchListener(new View.OnTouchListener() {
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
 					//ImageButton我放在了布局中心，布局一共300dp
-					mParams.x = (int) event.getRawX() - 150;
+					mParams.x = (int) event.getRawX()-150;
 					//这就是状态栏偏移量用的地方
-					mParams.y = (int) event.getRawY() - 150 - statusBarHeight;
-					windowManager.updateViewLayout(toucherLayout,params);
+					mParams.y = (int) event.getRawY()-150-statusBarHeight;
+					mWindowManager.updateViewLayout(toucherLayout, mParams);
 					return false;
 				}
 			});
@@ -91,7 +93,7 @@ public class MainService extends Service {
 
 	@Override
 	public void onDestroy() {
-		if(toucherLayout != null) {
+		if(toucherLayout!=null) {
 			mWindowManager.removeView(toucherLayout);
 		}
 		super.onDestroy();
