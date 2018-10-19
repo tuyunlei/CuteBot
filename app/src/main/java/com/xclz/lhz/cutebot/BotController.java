@@ -41,6 +41,7 @@ public class BotController {
 		mViewParams.height = bitmap.getHeight();
 		
 		mWindowManager.addView(botView, mViewParams);
+		
 	}
 	
 	public void remove() {

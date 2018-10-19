@@ -14,8 +14,6 @@ public class MainActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.main);
-
-		Toast.makeText(this, "hhh", 0).show();
 		
 		if (Build.VERSION.SDK_INT >= 23) {
             if (Settings.canDrawOverlays(MainActivity.this)) {
