@@ -17,6 +17,7 @@ public class BotModel {
 	//private BotImages images;
 	public BotModel(Context context) {
 		mContext = context;
+		mAction = new BotAction(context);
 	}
 	
 	public Bitmap getBitmap(int actionID) {

@@ -3,6 +3,7 @@ package com.xclz.lhz.cutebot;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.widget.Toast;
 
 public class MainService extends Service {
 	private BotController botController;
@@ -11,6 +12,7 @@ public class MainService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		
+		botController = new BotController(this);
 		botController.create();
 	}
 

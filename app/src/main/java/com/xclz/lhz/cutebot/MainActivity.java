@@ -15,6 +15,8 @@ public class MainActivity extends Activity  {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.main);
 
+		Toast.makeText(this, "hhh", 0).show();
+		
 		if (Build.VERSION.SDK_INT >= 23) {
             if (Settings.canDrawOverlays(MainActivity.this)) {
                 Intent intent = new Intent(MainActivity.this, MainService.class);
