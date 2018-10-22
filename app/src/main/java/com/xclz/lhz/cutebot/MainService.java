@@ -8,9 +8,9 @@ import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-import com.xclz.lhz.cutebot.MainService;
+import android.widget.TextView;
 
 public class MainService extends Service {
 	//要引用的布局文件.
@@ -20,7 +20,8 @@ public class MainService extends Service {
     //实例化的WindowManager.
     WindowManager mWindowManager;
 
-	View mCanvas;
+	ImageView mCanvas;
+	TextView textView;
 
 	private int statusBarHeight;
 
@@ -40,7 +41,7 @@ public class MainService extends Service {
 		mParams.gravity = Gravity.LEFT|Gravity.TOP;
 		mParams.x = 0;
 		mParams.y = 0;
-		mParams.width = 300;
+		mParams.width = 600;
 		mParams.height = 300;
 
 		LayoutInflater inflater = LayoutInflater.from(getApplication());
@@ -54,18 +55,19 @@ public class MainService extends Service {
         if(resourceId>0) {
             statusBarHeight = getResources().getDimensionPixelSize(resourceId);
         }
-		mCanvas = toucherLayout.findViewById(R.id.canvas);
+		mCanvas = (ImageView) toucherLayout.findViewById(R.id.canvas);
+		textView = (TextView) toucherLayout.findViewById(R.id.text);
 		mCanvas.setOnClickListener(new OnClickListener(){
 				long[] hints = new long[2];
 				@Override
 				public void onClick(View v) {
 					System.arraycopy(hints, 1, hints, 0, hints.length-1);
 					hints[hints.length-1] = SystemClock.uptimeMillis();
-					if(SystemClock.uptimeMillis()-hints[0]>=700) {
-						v.setBackgroundColor(0x8800FF00);
-						Toast.makeText(MainService.this, "连续点击两次以退出", Toast.LENGTH_SHORT).show();
+					if(SystemClock.uptimeMillis()-hints[0]>=600) {
+						//v.setBackgroundColor(0x8800FF00);
+						//Toast.makeText(MainService.this, "连续点击两次以退出", Toast.LENGTH_SHORT).show();
 					} else {
-						stopSelf();
+						//stopSelf();
 					}
 				}
 
@@ -73,11 +75,16 @@ public class MainService extends Service {
 		mCanvas.setOnTouchListener(new View.OnTouchListener() {
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
-					//ImageButton我放在了布局中心，布局一共300dp
-					mParams.x = (int) event.getRawX()-150;
-					//这就是状态栏偏移量用的地方
-					mParams.y = (int) event.getRawY()-150-statusBarHeight;
-					mWindowManager.updateViewLayout(toucherLayout, mParams);
+					if(event.getAction() == event.ACTION_MOVE) {
+						int size = event.getHistorySize();
+						if(size <= 0)
+							return false;
+						//ImageButton我放在了布局中心，布局一共300dp
+						mParams.x += (int) (event.getHistoricalX(size-1) - event.getRawX());
+						//这就是状态栏偏移量用的地方
+						mParams.y += (int) (event.getHistoricalY(size-1) - event.getRawY());
+						mWindowManager.updateViewLayout(toucherLayout, mParams);
+					}
 					return false;
 				}
 			});

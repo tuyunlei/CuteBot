@@ -2,15 +2,27 @@
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:gravity="center"
-	android:background="#00FF00">
+	android:layout_height="match_parent">
 
-	<View
-		android:id="@+id/canvas"
-		android:layout_height="200dp"
-		android:layout_width="200dp"
-		android:background="#FE0E00"/>
+	<FrameLayout
+		android:gravity="center"
+		android:layout_height="match_parent"
+		android:layout_width="match_parent">
+
+		<TextView
+			android:id="@+id/text"
+			android:layout_height="match_parent"
+			android:layout_width="match_parent"
+			android:text="Text"
+			android:textSize="14sp"
+			android:singleLine="false"/>
+
+		<ImageView
+			android:id="@+id/canvas"
+			android:layout_height="match_parent"
+			android:layout_width="match_parent"/>
+
+	</FrameLayout>
 
 </LinearLayout>
 
