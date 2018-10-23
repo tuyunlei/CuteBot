@@ -41,8 +41,8 @@ public class MainService extends Service {
 		mParams.gravity = Gravity.LEFT|Gravity.TOP;
 		mParams.x = 0;
 		mParams.y = 0;
-		mParams.width = 300;
-		mParams.height = 300;
+		mParams.width = 100;
+		mParams.height = 100;
 
 		LayoutInflater inflater = LayoutInflater.from(getApplication());
 		toucherLayout = (LinearLayout) inflater.inflate(R.layout.main, null);
@@ -64,10 +64,10 @@ public class MainService extends Service {
 					System.arraycopy(hints, 1, hints, 0, hints.length-1);
 					hints[hints.length-1] = SystemClock.uptimeMillis();
 					if(SystemClock.uptimeMillis()-hints[0]>=600) {
-						v.setBackgroundColor(0x8800FF00);
+						//v.setBackgroundColor(0x8800FF00);
 						//Toast.makeText(MainService.this, "连续点击两次以退出", Toast.LENGTH_SHORT).show();
 					} else {
-						stopSelf();
+						//stopSelf();
 					}
 				}
 
@@ -77,21 +77,22 @@ public class MainService extends Service {
 				private int downT;
 				private float downX;
 				private float downY;
-				
+
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
+					textView.setText(v.getX()+" "+v.getY()+"\n"+toucherLayout.getX()+" "+toucherLayout.getY());
 					int action = event.getAction();
-					if(action == event.ACTION_DOWN) {
+					if(action==event.ACTION_DOWN) {
 						downL = mParams.x;
 						downT = mParams.y;
 						downX = event.getRawX();
 						downY = event.getRawY();
-					}else if(action == event.ACTION_MOVE) {
-						final float xDistance = event.getRawX() - downX;
-						final float yDistance = event.getRawY() - downY;
-						
-						mParams.x = (int) (downL + xDistance);
-						mParams.y = (int) (downT + yDistance);
+					} else if(action==event.ACTION_MOVE) {
+						final float xDistance = event.getRawX()-downX;
+						final float yDistance = event.getRawY()-downY;
+
+						mParams.x = (int) (downL+xDistance);
+						mParams.y = (int) (downT+yDistance);
 						mWindowManager.updateViewLayout(toucherLayout, mParams);
 					}
 					return false;
