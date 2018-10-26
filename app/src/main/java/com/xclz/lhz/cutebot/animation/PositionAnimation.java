@@ -3,6 +3,7 @@ package com.xclz.lhz.cutebot.animation;
 import android.view.View;
 
 public class PositionAnimation extends Animation{
+	public float oneX, oneY;
 	public float deltaX, deltaY;
 	public AnimFunction funcX, funcY;
 	public float startX, startY, endX, endY;

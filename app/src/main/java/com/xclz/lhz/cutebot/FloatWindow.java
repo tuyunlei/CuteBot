@@ -13,24 +13,15 @@ public class FloatWindow {
 	public final static int NORMAL_WIDTH = 100;
 	public final static int NORMAL_HEIGHT = 100;
 
-	private boolean isActivity;
-
 	private View mView;
 	private Context mContext;
 	private WindowManager mWindowManager;
 	private WindowManager.LayoutParams mParams;
 	
 
-	public FloatWindow(Service service, View view) {
+	public FloatWindow(Context context, View view) {
 		mView = view;
-		mContext = service;
-		isActivity = false;
-	}
-	
-	public FloatWindow(Activity activity, View view) {
-		mView = view;
-		mContext = activity;
-		isActivity = true;
+		mContext = context;
 	}
 	
 	public WindowManager.LayoutParams getParam() {
@@ -46,18 +37,17 @@ public class FloatWindow {
 		return mParams;
 	}
 	
-	public void create() {
-		this.create(getParam());
+	public void present() {
+		this.present(getParam());
 	}
 	
-	public void create(WindowManager.LayoutParams param) {
+	public void present(WindowManager.LayoutParams param) {
 		mParams = param;
 		mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 		mWindowManager.addView(mView, param);
 	}
 	
-	public void destroy() {
+	public void close() {
 		mWindowManager.removeView(mView);
-		mView = null;
 	}
 }
