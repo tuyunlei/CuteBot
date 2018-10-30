@@ -23,7 +23,11 @@ public class ScheduledTask extends Thread {
 	@Override
 	public void run() {
 		while(!bOver) {
-			
+			for(Task task : mTasks) {
+				if(!task.isAvailable())
+					continue;
+				new Thread(task.func).start();
+			}
 		}
 	}
 	
