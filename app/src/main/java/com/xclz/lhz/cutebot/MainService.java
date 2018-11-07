@@ -3,18 +3,35 @@ package com.xclz.lhz.cutebot;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.widget.Toast;
+import com.xclz.lhz.cutebot.animation.AnimationPlayer;
+import com.xclz.lhz.cutebot.scheduled.TaskSchedule;
+import android.view.View;
 
 public class MainService extends Service {
-	private BotController botController;
 
+	private FloatWindow mWindow;
+	private FloatBot mBot;
+	private TaskSchedule mSchedule;
+
+	private AnimationPlayer mAnimPlayer;
+
+	private View mView;
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		
-		botController = new BotController(this);
-		botController.create();
+		mWindow = new FloatWindow(this);
+		mBot = new FloatBot(this, mWindow);
+		mSchedule = new TaskSchedule(mBot);
+		mAnimPlayer = new AnimationPlayer(mBot);
+		mView = mBot.getView();
+		mWindow.setView(mView);
+		mWindow.create();
+		mAnimPlayer.start();
+		mSchedule.start();
 	}
+	
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -23,7 +40,6 @@ public class MainService extends Service {
 
 	@Override
 	public void onDestroy() {
-		botController.remove();
 		super.onDestroy();
 	}
 

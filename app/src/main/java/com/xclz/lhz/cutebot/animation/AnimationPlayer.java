@@ -1,6 +1,7 @@
 package com.xclz.lhz.cutebot.animation;
 
 import android.view.View;
+import com.xclz.lhz.cutebot.FloatBot;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +18,14 @@ public class AnimationPlayer extends Thread {
 
 	private View mView;
 
-	public AnimationPlayer(View view) {
+	private FloatBot mBot;
+
+	public AnimationPlayer(FloatBot bot) {
 		bOver = false;
 		bStatic = false;
 		bPaused = false;
 
-		mView = view;
+		mBot = bot;
 		mAnimGroups = new ArrayList<AnimationGroup>();
 	}
 

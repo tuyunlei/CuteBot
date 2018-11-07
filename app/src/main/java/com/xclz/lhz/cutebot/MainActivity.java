@@ -14,7 +14,7 @@ public class MainActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.main);
-		
+		//TODO check resource file...
 		if (Build.VERSION.SDK_INT >= 23) {
             if (Settings.canDrawOverlays(MainActivity.this)) {
                 Intent intent = new Intent(MainActivity.this, MainService.class);

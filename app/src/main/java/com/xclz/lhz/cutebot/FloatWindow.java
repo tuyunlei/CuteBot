@@ -1,13 +1,8 @@
 package com.xclz.lhz.cutebot;
 
-import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
-import android.graphics.PixelFormat;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.WindowManager.LayoutParams;
 
 public class FloatWindow {
 	public final static int NORMAL_WIDTH = 100;
@@ -19,11 +14,46 @@ public class FloatWindow {
 	private WindowManager.LayoutParams mParams;
 	
 
-	public FloatWindow(Context context, View view) {
-		mView = view;
+	public FloatWindow(Context context) {
 		mContext = context;
 	}
 	
+	public void create() {
+		//TODO
+	}
+	
+	public void setView(View view) {
+		setView(view, mParams);
+	}
+	
+	public void setView(View view, WindowManager.LayoutParams params) {
+		if(mView != null)
+			mWindowManager.removeView(mView);
+		mWindowManager.addView(view, params);
+		mView = view;
+	}
+	
+	public void setX(float x) {
+		mParams.x = (int) x;
+	}
+	
+	public void setY(float y) {
+		mParams.y = (int) y;
+	}
+	
+	public float getX() {
+		return mParams.x;
+	}
+	
+	public float getY() {
+		return mParams.y;
+	}
+	
+	public void updateLayout() {
+		mWindowManager.updateViewLayout(mView, mParams);
+	}
+	
+/*	
 	public WindowManager.LayoutParams getParam() {
 		if(mParams == null) {
 			mParams = new WindowManager.LayoutParams();
@@ -50,4 +80,5 @@ public class FloatWindow {
 	public void close() {
 		mWindowManager.removeView(mView);
 	}
+	*/
 }

@@ -1,6 +1,7 @@
 package com.xclz.lhz.cutebot;
 
 import android.content.Context;
+import android.view.View;
 import com.xclz.lhz.cutebot.animation.AnimationPlayer;
 
 public class FloatBot {
@@ -13,10 +14,8 @@ public class FloatBot {
 	public FloatBot(Context context, FloatWindow window) {
 		mContext = context;
 		mWindow = window;
-	}
-	
-	public void create() {
-		//TODO
+		
+		mView = new FloatBotView(context);
 	}
 	
 	public int getX() {
@@ -35,6 +34,10 @@ public class FloatBot {
 	
 	public void setY() {
 		//TODO
+	}
+	
+	public View getView() {
+		return mView;
 	}
 	
 }
