@@ -1,26 +1,27 @@
 package com.xclz.lhz.cutebot.scheduled;
 
-public class LoopTask extends DelayTask {
+public class LoopTask extends Task {
+	private long startTime;
+	private long delayTime;
+	private long endTime;
 
-	public LoopTask(long delayTime, TaskFunction func) {
-		super(delayTime, func);
-		TaskFunction newFunc = new TaskFunction(){
-			@Override
-			public void run() {
-				
-			}
-		};
+	public LoopTask(long time, TaskFunction func) {
+		startTime = System.currentTimeMillis();
+		delayTime = time;
+		endTime = startTime + delayTime;
+		this.func = func;
 	}
 
-	private class LoopFuntion extends TaskFunction {
-		public LoopFuntion() {
-			
+	@Override
+	public boolean isAvailable() {
+		if(System.currentTimeMillis() >= endTime) {
+			startTime = System.currentTimeMillis();
+			endTime = startTime + delayTime;
+			return true;
 		}
-
-		@Override
-		public void run() {
-		}
-
+		return false;
 	}
+
+
 }
 

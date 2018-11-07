@@ -27,8 +27,14 @@ public class ScheduledTask extends Thread {
 				if(!task.isAvailable())
 					continue;
 				new Thread(task.func).start();
+				if(task instanceof LoopTask)
+					mTasks.remove(task);
 			}
 		}
+	}
+	
+	public void addTask(Task task) {
+		mTasks.add(task);
 	}
 	
 }

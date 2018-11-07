@@ -37,12 +37,12 @@ public class AnimationPlayer extends Thread {
 					if(lStartTime == 0) {
 						lStartTime = System.currentTimeMillis();
 						if(lSavedTime == 0)
-							initAnimGroup(group);
+							group.init(mView);
 					}
 					lCurTime = System.currentTimeMillis() - lStartTime;
 					//TODO:Add the curTime to savedTime when paused!!
 
-					if(group.posAnim != null && lCurTime <= group.posAnim.time) {
+					if(group.posAnim != null && lCurTime <= group.posAnim.ttime) {
 						finished = false;
 						if(group.posAnim.calc_type != Animation.CALC_TYPE_FUNCTION) {
 							float x = group.posAnim.startX + group.posAnim.oneX * (lSavedTime + lCurTime);
@@ -50,7 +50,7 @@ public class AnimationPlayer extends Thread {
 							mView.setX(x);
 							mView.setY(y);
 						}
-					}
+					}//TODO: Other anims
 
 					if(finished) {
 						mAnimGroups.remove(group);
@@ -66,18 +66,5 @@ public class AnimationPlayer extends Thread {
 			}
 		}
 	}
-
-	public void initAnimGroup(AnimationGroup group) {
-		if(group.posAnim.calc_type == Animation.CALC_TYPE_ORIGIN) {
-			group.posAnim.oneX = (group.posAnim.endX - group.posAnim.startX) / group.posAnim.time;
-			group.posAnim.oneY = (group.posAnim.endY - group.posAnim.startY) / group.posAnim.time;
-		} else if(group.posAnim.calc_type == Animation.CALC_TYPE_DELTA) {
-			group.posAnim.startX = mView.getX();
-			group.posAnim.startY = mView.getY();
-			group.posAnim.oneX = group.posAnim.deltaX / group.posAnim.time;
-			group.posAnim.oneY = group.posAnim.deltaY / group.posAnim.time;
-		}
-	}
-
 
 }

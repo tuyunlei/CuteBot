@@ -10,18 +10,31 @@ public class FloatBot {
 	private FloatBotView mView;
 	private AnimationPlayer mPlayer;
 	
-	public FloatBot(Context context) {
+	public FloatBot(Context context, FloatWindow window) {
 		mContext = context;
+		mWindow = window;
 	}
 	
 	public void create() {
-		mView = new FloatBotView(mContext);
-		mPlayer = new AnimationPlayer(mView);
-		mWindow = new FloatWindow(mContext, mView);
-		mWindow.present();
-		
-		mPlayer.start();
+		//TODO
 	}
 	
+	public int getX() {
+		//TODO
+		return 0;
+	}
+	
+	public int getY() {
+		//TODO
+		return 0;
+	}
+	
+	public void setX() {
+		//TODO
+	}
+	
+	public void setY() {
+		//TODO
+	}
 	
 }

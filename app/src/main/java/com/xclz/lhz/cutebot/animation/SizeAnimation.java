@@ -1,5 +1,5 @@
 package com.xclz.lhz.cutebot.animation;
 
-public class SizeAnimation
-{
+public class SizeAnimation extends Animation {
+	
 }
